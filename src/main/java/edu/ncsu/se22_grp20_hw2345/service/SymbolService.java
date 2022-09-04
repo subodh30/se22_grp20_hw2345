@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class SymbolService {
@@ -28,12 +29,23 @@ public class SymbolService {
         int count = -1;
         String mode = "";
         Map<String, Integer> symbolMap = symbolsData.getSymbolMap();
-        for (String key : symbolMap.keySet()) {
-            if (symbolMap.get(key) > count) {
-                count = symbolMap.get(key);
-                mode = key;
+        for (Map.Entry<String, Integer> entry : symbolMap.entrySet()) {
+            if (symbolMap.get(entry.getKey()) > count) {
+                count = symbolMap.get(entry.getKey());
+                mode = entry.getKey();
             }
         }
         return mode;
+    }
+
+    public Double entropy(SymbolsData symbolsData){
+        double count = symbolsData.getCount();
+        AtomicReference<Double> entropy = new AtomicReference<>(0.0);
+        symbolsData.getSymbolMap().values().forEach(y -> {
+            double probability =  y / count;
+            double logOfProbability = Math.log(probability) / Math.log(2);
+            entropy.set(entropy.get() - (probability * logOfProbability));
+        });
+        return entropy.get();
     }
 }
