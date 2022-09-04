@@ -9,8 +9,9 @@ import java.util.Map;
 @Data
 @Builder
 public class SymbolsData {
+    private int count;
     private String columnName;
     private Integer columnIndex;
-    Map<String, Integer> symbolCount;
-    List<String> data;
+    private Map<Character, Integer> symbolMap;
+    private List<String> data;
 }
