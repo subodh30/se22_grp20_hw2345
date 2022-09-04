@@ -1,14 +1,16 @@
 package edu.ncsu.se22_grp20_hw2345.model;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
 @Builder
+@Getter
+@Setter
 public class NumbersData {
+    List<String> data;
     private String columnName;
     private Integer columnIndex;
-    List<String> data;
 }

@@ -1,8 +1,12 @@
 package edu.ncsu.se22_grp20_hw2345.model;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Builder
+@Getter
+@Setter
 public class CommandArgs {
     private String shortName;
     private String longName;
