@@ -103,5 +103,18 @@ public class NumberService {
         }
         return median;
     }
+    
+    public Float standardDeviation(ArrayList<Integer> arr){
+	    int arr_length = arr.length;
+	    float sum=0.0, std_deviation=0.0;
+        for(int i=0; i<arr_length; i++){
+            sum+=arr[i];
+        }
+	    float mean = mean_calc(arr);
+        for(int i=0; i<arr_length; i++){
+            std_dev += Math.pow(arr[i] - mean, 2);
+        }
+	    return Math.sqrt(std_deviation/arr_length);
+        }
 
 }
