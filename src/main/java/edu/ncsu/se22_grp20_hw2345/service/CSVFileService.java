@@ -60,7 +60,7 @@ public class CSVFileService {
         });
     }
 
-    private List<String> readFile(String filePath) {
+    public List<String> readFile(String filePath) {
         try (BufferedReader bufferedReader = Files.newBufferedReader(Path.of(filePath), StandardCharsets.UTF_8)) {
             return bufferedReader.lines().toList();
         } catch (IOException e) {
