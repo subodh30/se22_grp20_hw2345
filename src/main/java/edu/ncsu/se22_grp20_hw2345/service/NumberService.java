@@ -103,6 +103,16 @@ public class NumberService {
         }
         return median;
     }
+
+    private float mean_calc(ArrayList<Integer> arr){
+	    float mean;
+	    int sum = 0;
+	    for(int i=0; i<arr.size(); i++){
+		    sum += arr.get(i);
+	    }
+	    mean = sum/(arr.size());
+	    return mean
+    }
     
     public Float standardDeviation(ArrayList<Integer> arr){
 	    int arr_length = arr.length;
@@ -115,6 +125,7 @@ public class NumberService {
             std_dev += Math.pow(arr[i] - mean, 2);
         }
 	    return Math.sqrt(std_deviation/arr_length);
-        }
+    }
+	
 
 }
