@@ -1,6 +1,7 @@
 package edu.ncsu.se22_grp20_hw2345.service;
 
 import edu.ncsu.se22_grp20_hw2345.model.CSVData;
+import edu.ncsu.se22_grp20_hw2345.model.Data;
 import edu.ncsu.se22_grp20_hw2345.model.NumbersData;
 import edu.ncsu.se22_grp20_hw2345.model.SymbolsData;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,9 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CSVFileService {
@@ -18,7 +21,7 @@ public class CSVFileService {
         List<String> data = readFile(filePath);
         String[] headers = data.get(0).split(",");
         storeData(csvData, data, headers);
-        List<String> columNames = Arrays.stream(headers).toList();
+        List<String> columNames = Arrays.stream(headers).collect(Collectors.toList());
         Map<String, SymbolsData> symbolData = new HashMap<>();
         Map<String, NumbersData> numbersData = new HashMap<>();
 
@@ -61,8 +64,8 @@ public class CSVFileService {
     }
 
     public List<String> readFile(String filePath) {
-        try (BufferedReader bufferedReader = Files.newBufferedReader(Path.of(filePath), StandardCharsets.UTF_8)) {
-            return bufferedReader.lines().toList();
+        try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(filePath) ,StandardCharsets.UTF_8)) {
+            return bufferedReader.lines().collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
