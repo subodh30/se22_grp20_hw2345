@@ -12,6 +12,6 @@ public class Columns {
     List<String> names;
     Map<String, String> allData;
     List<String> klass;
-    Map<String, String> X;
-    Map<String, String> Y;
+    Map<String, List<String>> X;
+    Map<String, List<String>> Y;
 }

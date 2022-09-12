@@ -1,71 +1,32 @@
 package edu.ncsu.se22_grp20_hw2345.service;
 
-import edu.ncsu.se22_grp20_hw2345.model.CSVData;
-import edu.ncsu.se22_grp20_hw2345.model.Data;
-import edu.ncsu.se22_grp20_hw2345.model.NumbersData;
-import edu.ncsu.se22_grp20_hw2345.model.SymbolsData;
+import edu.ncsu.se22_grp20_hw2345.model.Row;
+import edu.ncsu.se22_grp20_hw2345.model.The;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class CSVFileService {
-    public CSVData getCSVData(String filePath) {
-        Map<Integer, List<String>> csvData = new HashMap<>();
-        List<String> data = readFile(filePath);
-        String[] headers = data.get(0).split(",");
-        storeData(csvData, data, headers);
-        List<String> columNames = Arrays.stream(headers).collect(Collectors.toList());
-        Map<String, SymbolsData> symbolData = new HashMap<>();
-        Map<String, NumbersData> numbersData = new HashMap<>();
 
-        for (int i = 0; i < headers.length; i++) {
-            if (headers[i].charAt(headers[i].length() - 1) != ':') {
-                if (Character.isUpperCase(headers[i].charAt(0))) {
-                    numbersData.put(headers[i], NumbersData.builder()
-                            .columnIndex(i)
-                            .columnName(headers[i])
-                            .data(csvData.get(i))
-                            .build());
-                } else {
-                    symbolData.put(headers[i], SymbolsData.builder()
-                            .columnIndex(i)
-                            .columnName(headers[i])
-                            .data(csvData.get(i))
-                            .build());
-                }
-            }
-        }
-
-        return CSVData.builder()
-                .columns(columNames)
-                .symbolsData(symbolData)
-                .numbersData(numbersData)
-                .build();
-    }
-
-    private static void storeData(Map<Integer, List<String>> csvData, List<String> data, String[] headers) {
-        for (int i = 0; i < headers.length; i++) {
-            csvData.put(i, new ArrayList<>());
-        }
-
-        data.stream().skip(1).forEach(line -> {
-            String[] value = line.split(",");
-            for (int i = 0; i < value.length; i++) {
-                csvData.get(i).add(value[i]);
-            }
-        });
-    }
-
-    public List<String> readFile(String filePath) {
-        try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(filePath) ,StandardCharsets.UTF_8)) {
-            return bufferedReader.lines().collect(Collectors.toList());
+    public List<Row> getRows(String filePath) {
+        List<Row> rows = new ArrayList<>();
+        try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(filePath), StandardCharsets.UTF_8)) {
+            bufferedReader.lines().forEach(line -> rows.add(Row.builder()
+                    .cells(Arrays.stream(line.split(The.getArgs().get("separator").toString()))
+                            .collect(Collectors.toList()))
+                    .cooked(Arrays.stream(line.split(The.getArgs().get("separator").toString()))
+                            .collect(Collectors.toList()))
+                    .isEval(false)
+                    .build()));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -25,7 +25,7 @@ public class SymbolService {
         }
     }
 
-    public String mode(SymbolsData symbolsData) {
+    public String mid(SymbolsData symbolsData) {
         int count = -1;
         String mode = "";
         Map<String, Integer> symbolMap = symbolsData.getSymbolMap();
@@ -38,7 +38,7 @@ public class SymbolService {
         return mode;
     }
 
-    public Double entropy(SymbolsData symbolsData){
+    public Double div(SymbolsData symbolsData){
         double count = symbolsData.getCount();
         AtomicReference<Double> entropy = new AtomicReference<>(0.0);
         symbolsData.getSymbolMap().values().forEach(y -> {

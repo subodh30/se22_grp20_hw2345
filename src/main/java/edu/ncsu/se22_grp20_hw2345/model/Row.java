@@ -8,8 +8,8 @@ import java.util.Map;
 
 @Data
 @Builder
-public class Rows {
-    List<List<String>> cells;
+public class Row {
+    List<String> cells;
     boolean isEval;
-    Map<String, String> cooked;
+    List<String> cooked;
 }

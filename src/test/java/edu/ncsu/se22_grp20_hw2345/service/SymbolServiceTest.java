@@ -29,12 +29,12 @@ class SymbolServiceTest {
     @Test
     void validModeTest() {
         symbolService.addData(symbolsData);
-        Assertions.assertEquals("a", symbolService.mode(symbolsData));
+        Assertions.assertEquals("a", symbolService.mid(symbolsData));
     }
 
     @Test
     void validEntropyTest() {
         symbolService.addData(symbolsData);
-        Assertions.assertEquals(1.3787834934861756, symbolService.entropy(symbolsData));
+        Assertions.assertEquals(1.3787834934861756, symbolService.div(symbolsData));
     }
 }
