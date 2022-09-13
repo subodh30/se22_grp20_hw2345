@@ -4,10 +4,21 @@ import lombok.Data;
 
 import java.util.ArrayList;
 
-@Data
-public class Numbers {
+//@Data
+public class Numbers implements ASCIICharacters {
     private String columnName;
     private Integer columnIndex;
     private int count;
     private ArrayList<Integer> data;
+
+    public Numbers() {
+
+    }
+
+    public Numbers(int c, String s) {
+        this.columnIndex = c;
+        this.columnName = s;
+    }
+
+
 }

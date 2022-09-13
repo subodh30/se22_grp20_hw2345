@@ -7,11 +7,20 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Data
-public class Symbols {
+public class Symbols implements ASCIICharacters {
     private int count;
     private String columnName;
     private Integer columnIndex;
     private Map<String, Integer> symbolMap = new HashMap<>();
+
+    public Symbols(int c, String s) {
+        this.columnName = s;
+        this.columnIndex = c;
+    }
+
+    public Symbols() {
+
+    }
 
     public void add(String c) {
         if (c != null && !c.equals("?")) {
