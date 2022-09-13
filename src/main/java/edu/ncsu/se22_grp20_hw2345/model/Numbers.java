@@ -1,15 +1,11 @@
 package edu.ncsu.se22_grp20_hw2345.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.ArrayList;
 
-@Builder
-@Getter
-@Setter
-public class NumbersData {
+@Data
+public class Numbers {
     private String columnName;
     private Integer columnIndex;
     private int count;
