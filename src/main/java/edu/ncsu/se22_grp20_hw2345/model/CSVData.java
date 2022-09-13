@@ -12,6 +12,6 @@ import java.util.Map;
 @Setter
 public class CSVData {
     List<String> columns;
-    Map<String, SymbolsData> symbolsData;
+    Map<String, Symbols> symbolsData;
     Map<String, NumbersData> numbersData;
 }
