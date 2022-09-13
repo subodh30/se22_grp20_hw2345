@@ -20,6 +20,7 @@ class NumberServiceTest {
 
     @BeforeEach
     public void beforeAll(){
+        numsService = new NumberService();
         List<String> numsList = Arrays.asList("1", "2", "5", "6", "9", "1", "6", "5", "4", "8");
         numsData = NumbersData.builder().data(numsList).build();
     }
@@ -27,14 +28,23 @@ class NumberServiceTest {
     void validMedianTest(){
 //        enter code for validating median function
 
+
+        double observed_median =  numsService.median(numsData.getData());
+        Assertions.assertEquals(5, observed_median);
+
     }
 
     void validMeanTest(){
 //        enter code for validating mean function
+        double observed_mean = numsService.mean_calc(numsData.getData());;
+        Assertions.assertEquals(5, observed_mean);
+
     }
 
     void validStandardDeviation(){
 //        enter code for validating the standard deviation function
+        double observed_stddeviation = numsService.standardDeviation(numsData.getData());;
+        Assertions.assertEquals(5, observed_stddeviation);
     }
 }
 //

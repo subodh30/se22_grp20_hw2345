@@ -72,25 +72,36 @@ public class NumberService {
 //        ns.nums();
 //    }
 
+
+//    Function for converting string array to double
+    private List<Double> convertMyArray (List<String> arr){
+        List<Double> newarr = new ArrayList<>();
+        for(String i : arr){
+            newarr.add(Double.parseDouble(i));
+        }
+        return newarr;
+    }
+
 //    Function for sorting the array
-    private ArrayList<Integer> sortMyArray(ArrayList<Integer> arr){
-        for(int i=0; i<arr.size(); i++){
-            for(int j=i+1; j< arr.size(); j++){
-                int temp = 0;
-                if(arr.get(i) > arr.get(j)){
-                    temp = arr.get(i);
-                    arr.set(i, arr.get(j));
-                    arr.set(j, temp);
+    private List<Double> sortMyArray(List<String> arr){
+        List<Double> newarr = new ArrayList<>(convertMyArray(arr));
+        for(int i=0; i<newarr.size(); i++){
+            for(int j=i+1; j< newarr.size(); j++){
+                double temp = 0;
+                if(newarr.get(i) > newarr.get(j)){
+                    temp = newarr.get(i);
+                    newarr.set(i, newarr.get(j));
+                    newarr.set(j, temp);
                 }
             }
         }
-        return arr;
+        return newarr;
     }
 
 //    *Function for Median
-    public Integer median(ArrayList<Integer> arr){
-        ArrayList<Integer> sortedarr = new ArrayList<>(sortMyArray(arr));
-        int median = 0;
+    public Double median(List<String> arr){
+        List<Double> sortedarr = new ArrayList<>(sortMyArray(arr));
+        double median = 0;
         if(sortedarr.size()%2 != 0){
 //            there are odd number of elements in the sortedarray
             int index = sortedarr.size()/2;
@@ -104,26 +115,28 @@ public class NumberService {
         return median;
     }
 
-    private float mean_calc(ArrayList<Integer> arr){
-	    float mean;
-	    int sum = 0;
-	    for(int i=0; i<arr.size(); i++){
-		    sum += arr.get(i);
+    public double mean_calc(List<String> arr){
+	    double mean;
+        List<Double> newarr = convertMyArray(arr);
+	    double sum = 0;
+	    for(int i=0; i<newarr.size(); i++){
+		    sum += newarr.get(i);
 	    }
-	    mean = sum/(arr.size());
+	    mean = sum/(newarr.size());
 	    return mean;
     }
 
-    public Double standardDeviation(ArrayList<Integer> arr){
-	    int arr_length = arr.size();
-	    double  sum=0.0;
+    public Double standardDeviation(List<String> arr){
+        List<Double> newarr = convertMyArray(arr);
+	    int arr_length = newarr.size();
+        double  sum=0.0;
         double std_deviation=0.0;
         for(int i=0; i<arr_length; i++){
-            sum+=arr.get(i);
+            sum+=newarr.get(i);
         }
 	    double mean = mean_calc(arr);
         for(int i=0; i<arr_length; i++){
-            std_deviation += Math.pow(arr.get(i) - mean, 2);
+            std_deviation += Math.pow(newarr.get(i) - mean, 2);
         }
 	    return Math.sqrt(std_deviation/arr_length);
     }
