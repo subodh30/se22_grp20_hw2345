@@ -21,4 +21,13 @@ public class Numbers implements ASCIICharacters {
     }
 
 
+    @Override
+    public Integer mid() {
+        return 0;
+    }
+
+    @Override
+    public Double div() {
+        return null;
+    }
 }

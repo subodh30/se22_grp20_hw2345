@@ -1,7 +1,5 @@
 package edu.ncsu.se22_grp20_hw2345.model;
 
-import lombok.Builder;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +15,10 @@ import java.util.stream.Collectors;
 public class Data {
     Columns columns;
     List<Row> rows;
+
+    public Data(String filePath) {
+        addData(filePath);
+    }
 
     public List<Row> getRows(String filePath) {
         List<Row> rows = new ArrayList<>();
@@ -35,10 +37,9 @@ public class Data {
     }
 
     public void addData(String src) {
-        Data data = new Data();
         List<Row> rows = getRows(src);
         for (Row row : rows) {
-            add(row, data);
+            add(row, this);
         }
     }
 
@@ -47,25 +48,22 @@ public class Data {
             data.setColumns(Columns.builder()
                     .names(row.getCells())
                     .build());
-        }else{
+        } else {
             data.getRows().add(row);
         }
     }
 
-    public void stats(Map<String, List<String>> columns, String functionName, int decimalPlaces) {
+    private double round(double value, int decimalPlaces) {
+        double scale = Math.pow(10, decimalPlaces);
+        return Math.round(value * scale) / scale;
+    }
+
+    public Map<String, String> stats(int decimalPlaces, ASCIICharacters showCols, String functionName) {
         if (functionName.equals("mid")) {
-            for (Map.Entry entry : columns.entrySet()) {
-                //column logic S,s
-                //call mid
-                //round upto decimal places
-            }
-        } else {
-            for (Map.Entry entry : columns.entrySet()) {
-                //column logic S,s
-                //call div
-                //round upto decimal places
-            }
+            Object mid = showCols.mid();
 
         }
+//        return round(showCols.div(), decimalPlaces);
+        return null;
     }
 }
