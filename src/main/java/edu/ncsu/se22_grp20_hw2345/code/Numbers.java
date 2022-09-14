@@ -2,16 +2,17 @@ package edu.ncsu.se22_grp20_hw2345.code;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 //@Data
 public class Numbers implements ASCIICharacters {
     private String columnName;
     private Integer columnIndex;
     private int count;
-    private ArrayList<Integer> data;
+    private List<Integer> data;
 
-    public Numbers() {
-
+    public Numbers(List<String> data) {
+        this.data = data.stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 
     public Numbers(int c, String s) {
@@ -21,13 +22,18 @@ public class Numbers implements ASCIICharacters {
 
 
     @Override
-    public Integer mid() {
+    public Integer mid(int decimalPlaces) {
         return 0;
     }
 
     @Override
-    public Double div() {
+    public Double div(int decimalPlaces) {
         return null;
+    }
+
+    private double round(double value, int decimalPlaces) {
+        double scale = Math.pow(10, decimalPlaces);
+        return Math.round(value * scale) / scale;
     }
 
     //    Function for converting string array to double

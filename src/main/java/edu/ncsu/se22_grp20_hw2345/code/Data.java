@@ -1,5 +1,6 @@
 package edu.ncsu.se22_grp20_hw2345.code;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,17 +31,23 @@ public class Data {
         }
     }
 
-    private double round(double value, int decimalPlaces) {
-        double scale = Math.pow(10, decimalPlaces);
-        return Math.round(value * scale) / scale;
-    }
-
-    public Map<String, String> stats(int decimalPlaces, ASCIICharacters showCols, String functionName) {
-        if (functionName.equals("mid")) {
-            Object mid = showCols.mid();
-
+    public Map<String, String> stats(int decimalPlaces, Map<String, List<String>> showCols, String functionName) {
+        Map<String, String> stats = new HashMap<>();
+        for (Map.Entry<String, List<String>> entry : showCols.entrySet()) {
+            ASCIICharacters column;
+            if (Character.isUpperCase(entry.getKey().charAt(0))) {
+                column = new Numbers(entry.getValue());
+            } else {
+                column = new Symbols(entry.getValue());
+            }
+            String value;
+            if (functionName.equals("mid")) {
+                value = column.mid(decimalPlaces).toString();
+            } else {
+                value = column.div(decimalPlaces).toString();
+            }
+            stats.put(entry.getKey(), value);
         }
-//        return round(showCols.div(), decimalPlaces);
-        return null;
+        return stats;
     }
 }
