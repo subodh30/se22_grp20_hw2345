@@ -37,22 +37,14 @@ public class TestEngine {
                 Method method = eg.getClass().getDeclaredMethod(k);
 
                 method.invoke(eg);
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         } else {
             try {
                 Method method = eg.getClass().getDeclaredMethod(k);
                 out = Boolean.parseBoolean(method.invoke(eg).toString());
-            } catch (NoSuchMethodException e) {
-                throw e;
-            } catch (InvocationTargetException e) {
-                throw e;
-            } catch (IllegalAccessException e) {
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 throw e;
             }
         }
@@ -81,7 +73,7 @@ class Eg {
         List<String> methodsList = new ArrayList<>();
         try {
 
-            Class classobj = Eg.class;
+            Class<Eg> classobj = Eg.class;
             Method[] methods = classobj.getMethods();
 
             for (Method method : methods) {
@@ -146,7 +138,7 @@ class Eg {
 //            return mode=="a" and 1.37 <= entropy and entropy <=1.38 end
 
     public void sym() {
-        Symbols symbolsData = new Symbols();
+        Symbols symbolsData = new Symbols(1, "sym");
         for (int q = 0; q < 4; q++) {
             symbolsData.add("a");
         }
@@ -154,8 +146,8 @@ class Eg {
         symbolsData.add("b");
         symbolsData.add("b");
         symbolsData.add("c");
-        String mode = symbolsData.mid();
-        Double entropy = symbolsData.div();
+        String mode = symbolsData.mid(2);
+        Double entropy = symbolsData.div(2);
         System.out.println("Mode = " + mode + "Entropy = " + entropy);
     }
 

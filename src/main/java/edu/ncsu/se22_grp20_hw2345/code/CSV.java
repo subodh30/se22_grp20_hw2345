@@ -22,6 +22,7 @@ public class CSV {
                             .collect(Collectors.toList()))
                     .isEval(false)
                     .build()));
+            return rows;
         } catch (IOException e) {
             e.printStackTrace();
         }
