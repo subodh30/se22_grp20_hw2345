@@ -1,7 +1,7 @@
 package edu.ncsu.se22_grp20_hw2345;
 
-import edu.ncsu.se22_grp20_hw2345.model.TestEngine;
-import edu.ncsu.se22_grp20_hw2345.model.The;
+import edu.ncsu.se22_grp20_hw2345.code.TestEngine;
+import edu.ncsu.se22_grp20_hw2345.code.The;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

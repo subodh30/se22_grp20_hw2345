@@ -1,4 +1,4 @@
-package edu.ncsu.se22_grp20_hw2345.model;
+package edu.ncsu.se22_grp20_hw2345.code;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

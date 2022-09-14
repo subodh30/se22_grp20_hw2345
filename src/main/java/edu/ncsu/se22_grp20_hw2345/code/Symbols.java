@@ -1,4 +1,4 @@
-package edu.ncsu.se22_grp20_hw2345.model;
+package edu.ncsu.se22_grp20_hw2345.code;
 
 import lombok.Data;
 
@@ -30,6 +30,7 @@ public class Symbols implements ASCIICharacters {
         }
     }
 
+    @Override
     public String mid() {
         int count = -1;
         String mode = "";
@@ -43,6 +44,7 @@ public class Symbols implements ASCIICharacters {
         return mode;
     }
 
+    @Override
     public Double div() {
         double count = this.getCount();
         AtomicReference<Double> entropy = new AtomicReference<>(0.0);
