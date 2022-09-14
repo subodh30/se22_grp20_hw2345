@@ -1,7 +1,5 @@
 package edu.ncsu.se22_grp20_hw2345.model;
 
-import lombok.Builder;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +15,11 @@ import java.util.stream.Collectors;
 public class Data {
     Columns columns;
     List<Row> rows;
+
+
+    public Data(String filePath) {
+        addData(filePath);
+    }
 
     public List<Row> getRows(String filePath) {
         List<Row> rows = new ArrayList<>();
@@ -35,10 +38,9 @@ public class Data {
     }
 
     public void addData(String src) {
-        Data data = new Data();
         List<Row> rows = getRows(src);
         for (Row row : rows) {
-            add(row, data);
+            add(row, this);
         }
     }
 
@@ -47,12 +49,12 @@ public class Data {
             data.setColumns(Columns.builder()
                     .names(row.getCells())
                     .build());
-        }else{
+        } else {
             data.getRows().add(row);
         }
     }
 
-    public void stats(Map<String, List<String>> columns, String functionName, int decimalPlaces) {
+    public void stats(int decimalPlaces, Map<String, List<String>> columns, String functionName) {
         if (functionName.equals("mid")) {
             for (Map.Entry entry : columns.entrySet()) {
                 //column logic S,s

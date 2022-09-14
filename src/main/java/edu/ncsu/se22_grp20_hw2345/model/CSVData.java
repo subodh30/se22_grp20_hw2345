@@ -13,5 +13,5 @@ import java.util.Map;
 public class CSVData {
     List<String> columns;
     Map<String, Symbols> symbolsData;
-    Map<String, NumbersData> numbersData;
+    Map<String, Numbers> numbersData;
 }

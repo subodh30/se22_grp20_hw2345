@@ -10,7 +10,8 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class NumbersData {
+public class Numbers {
+
     List<String> data; //items seen
     private String columnName; //column name
     private Integer columnIndex; //column position
@@ -21,7 +22,7 @@ public class NumbersData {
 //    private ArrayList<Integer> numberArray;
 
 
-    public NumbersData() {
+    public Numbers() {
         low = Double.MAX_VALUE;
         high = Double.MIN_VALUE;
     }
