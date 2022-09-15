@@ -3,6 +3,7 @@ package edu.ncsu.se22_grp20_hw2345.code;
 import lombok.Data;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -12,14 +13,15 @@ public class Symbols implements ASCIICharacters {
     private String columnName;
     private Integer columnIndex;
     private Map<String, Integer> symbolMap = new HashMap<>();
+    private List<String> data;
 
     public Symbols(int c, String s) {
         this.columnName = s;
         this.columnIndex = c;
     }
 
-    public Symbols() {
-
+    public Symbols(List<String> data) {
+        this.data = data;
     }
 
     public void add(String c) {
@@ -31,7 +33,7 @@ public class Symbols implements ASCIICharacters {
     }
 
     @Override
-    public String mid() {
+    public String mid(int decimalPlaces) {
         int count = -1;
         String mode = "";
         Map<String, Integer> symbolMap = this.getSymbolMap();
@@ -45,7 +47,7 @@ public class Symbols implements ASCIICharacters {
     }
 
     @Override
-    public Double div() {
+    public Double div(int decimalPlaces) {
         double count = this.getCount();
         AtomicReference<Double> entropy = new AtomicReference<>(0.0);
         this.getSymbolMap().values().forEach(y -> {
@@ -53,6 +55,10 @@ public class Symbols implements ASCIICharacters {
             double logOfProbability = Math.log(probability) / Math.log(2);
             entropy.set(entropy.get() - (probability * logOfProbability));
         });
-        return entropy.get();
+        return round(entropy.get(), decimalPlaces);
+    }
+    private double round(double value, int decimalPlaces) {
+        double scale = Math.pow(10, decimalPlaces);
+        return Math.round(value * scale) / scale;
     }
 }
