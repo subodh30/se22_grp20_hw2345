@@ -1,69 +1,40 @@
-package edu.ncsu.se22_grp20_hw2345.service;
-
-//import edu.ncsu.se22_grp20_hw2345.model.SymbolsData;
-
-import org.springframework.stereotype.Service;
+package edu.ncsu.se22_grp20_hw2345.code;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+//@Data
+public class Numbers implements ASCIICharacters {
+    private String columnName;
+    private Integer columnIndex;
+    private int count;
+    private List<Integer> data;
+
+    public Numbers(List<String> data) {
+        this.data = data.stream().map(Integer::parseInt).collect(Collectors.toList());
+    }
+
+    public Numbers(int c, String s) {
+        this.columnIndex = c;
+        this.columnName = s;
+    }
 
 
-@Service
-public class NumberService {
+    @Override
+    public Integer mid(int decimalPlaces) {
+        return 0;
+    }
 
-//    private ArrayList<Integer> add(NumbersData numbersData, String c){
-//        if (c != null && !c.equals("?")) {
-//            ArrayList<Integer> numArray = numbersData.getNumberArray();
-//            return numArray;
-//        }
-//        return null;
-//    }
-//
-//    public void addData(NumbersData numbersData){
-//        System.out.println("into adddata");
-//        numbersData.setData(new ArrayList<>());
-//        for(String num : numbersData.getData()){
-//            //todo add function
-//            System.out.println(num);
-//        }
-//    }
-//
-//    public void nums() throws FileNotFoundException {
-////        BufferedReader bf = new BufferedReader(new FileReader("data.csv"));
-////        sc.useDelimiter(",");
-////        while(sc.hasNext()){
-////            System.out.println(sc.next());
-////        }
-////        sc.close();
-//        List<String> numList = Arrays.asList("a", "a", "a", "a", "b", "b", "c");
-//        NumbersData numbersData = NumbersData.builder()
-//                .data(numList)
-//                .build();
-////        System.out.println(numbersData);
-//        for(String s : numbersData.getData()){
-//            System.out.println(s);
-//
-//        }
-////        Scanner sc = new Scanner((Readable) numbersData);
-//        addData(numbersData);
-////        while(sc.hasNext()){
-////            System.out.println(sc.next());
-////        }
-////        BufferedReader bf = new BufferedReader(new FileReader("data.csv"));
-//
-////        List<String> numberMap = numbersData.getData();
-//////        numberMap.add()
-////        CSVFileService csvs = new CSVFileService();
-//
-////        csvs.readFile();
-////        System.out.println();
-//    }
-//
-//    public static void main(String[] args) throws FileNotFoundException {
-//        NumberService ns = new NumberService();
-//        ns.nums();
-//    }
+    @Override
+    public Double div(int decimalPlaces) {
+        return null;
+    }
 
+    private double round(double value, int decimalPlaces) {
+        double scale = Math.pow(10, decimalPlaces);
+        return Math.round(value * scale) / scale;
+    }
 
     //    Function for converting string array to double
     private List<Double> convertMyArray(List<String> arr) {
@@ -131,7 +102,4 @@ public class NumberService {
         }
         return Math.sqrt(std_deviation / arr_length);
     }
-
-
 }
-//
