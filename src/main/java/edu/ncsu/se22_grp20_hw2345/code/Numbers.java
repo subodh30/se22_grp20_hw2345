@@ -2,32 +2,61 @@ package edu.ncsu.se22_grp20_hw2345.code;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 //@Data
-public class Numbers implements ASCIICharacters {
-    private String columnName;
-    private Integer columnIndex;
-    private int count;
-    private ArrayList<Integer> data;
+public class Numbers extends ColumnData {
 
-    public Numbers() {
+    private int count = 0;
+    private int low = Integer.MAX_VALUE;
+    private int high = Integer.MIN_VALUE;
+    List<Integer> has = new ArrayList<>();
+    boolean isSorted = true;
 
-    }
-
-    public Numbers(int c, String s) {
-        this.columnIndex = c;
-        this.columnName = s;
+    public Numbers(int columnIndex, String columnName) {
+        setColumnName(columnName);
+        setColumnIndex(columnIndex);
     }
 
 
     @Override
-    public Integer mid() {
+    public Integer mid(int decimalPlaces) {
         return 0;
     }
 
     @Override
-    public Double div() {
-        return null;
+    public Double div(int decimalPlaces) {
+        return 0.0;
+    }
+
+    //    function Num:add(v,    pos)
+//  if v~="?" then
+//    self.n  = self.n + 1
+//    self.lo = math.min(v, self.lo)
+//    self.hi = math.max(v, self.hi)
+//            if     #self._has < the.nums           then pos=1 + (#self._has)
+//    elseif math.random() < the.nums/self.n then pos=math.random(#self._has) end
+//    if pos then self.isSorted = false
+//    self._has[pos] = tonumber(v) end end end
+    @Override
+    public void add(String cellValue) {
+        int numValue = Integer.parseInt(cellValue), bucketSize = (Integer) The.getArgs().get("nums");
+        if (cellValue != "?") {
+            count++;
+            low = Math.min(low, numValue);
+            high = Math.max(high, numValue);
+            if (has.size() < bucketSize) {
+                has.add(numValue);
+            } else {
+                int rnd = new Random().nextInt(has.size());
+                has.add(rnd, numValue);
+            }
+        }
+    }
+
+    private double round(double value, int decimalPlaces) {
+        double scale = Math.pow(10, decimalPlaces);
+        return Math.round(value * scale) / scale;
     }
 
     //    Function for converting string array to double

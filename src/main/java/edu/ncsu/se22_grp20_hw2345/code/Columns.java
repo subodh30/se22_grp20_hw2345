@@ -11,17 +11,17 @@ import java.util.List;
 public class Columns {
     List<String> names;
     //    Map<String, List<String>> allData;
-    List<ASCIICharacters> allData = new ArrayList<>();
+    List<ColumnData> allData = new ArrayList<>();
     //    List<String> klass;
     //    Map<String, List<String>> X;
 //    Map<String, List<String>> Y;
-    List<ASCIICharacters> Y = new ArrayList<>();
-    List<ASCIICharacters> X = new ArrayList<>();
-    ASCIICharacters klass;
+    List<ColumnData> Y = new ArrayList<>();
+    List<ColumnData> X = new ArrayList<>();
+    ColumnData klass;
 
     public void read(List<String> names) {
         this.names = names;
-        ASCIICharacters col;
+        ColumnData col;
         for (int c = 0; c < names.size(); c++) {
             if (Character.isUpperCase(names.get(c).charAt(0))) { //numeric
                 col = new Numbers(c, names.get(c));

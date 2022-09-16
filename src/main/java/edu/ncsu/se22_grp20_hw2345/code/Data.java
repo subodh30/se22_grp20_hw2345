@@ -1,5 +1,6 @@
 package edu.ncsu.se22_grp20_hw2345.code;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,37 +11,45 @@ public class Data {
 
     //implement stats, readFile
     public Data(String filePath) {
-        addData(filePath);
-    }
-
-    public void addData(String src) {
-        List<Row> rows = CSV.csv(src);
+        List<Row> rows = CSV.csv(filePath);
         for (Row row : rows) {
-            add(row, this);
+            add(row);
         }
     }
 
-    public void add(Row row, Data data) {
-        if (null == data.getColumns()) {
-            data.setColumns(Columns.builder()
+    public void add(Row row) {
+        if (null == this.getColumns()) {
+            this.setColumns(Columns.builder()
                     .names(row.getCells())
                     .build());
         } else {
-            data.getRows().add(row);
+            this.getRows().add(row);
         }
     }
 
+
+    //    function Data:stats(  places,showCols,fun,    t,v)
+//    showCols, fun = showCols or self.cols.y, fun or "mid"
+//    t={}; for _,col in pairs(showCols) do
+//    v=fun(col)
+//    v=type(v)=="number" and rnd(v,places) or v
+//    t[col.name]=v end; return t end
     private double round(double value, int decimalPlaces) {
         double scale = Math.pow(10, decimalPlaces);
         return Math.round(value * scale) / scale;
     }
 
-    public Map<String, String> stats(int decimalPlaces, ASCIICharacters showCols, String functionName) {
-        if (functionName.equals("mid")) {
-            Object mid = showCols.mid();
-
+    public Map<String, String> stats(int decimalPlaces, List<ColumnData> showCols, String functionName) {
+        Map<String, String> stats = new HashMap<>();
+        for (ColumnData column : showCols) {
+            String value;
+            if (functionName.equals("mid")) {
+                value = column.mid(decimalPlaces).toString();
+            } else {
+                value = column.div(decimalPlaces).toString();
+            }
+            stats.put(column.getColumnName(), value);
         }
-//        return round(showCols.div(), decimalPlaces);
-        return null;
+        return stats;
     }
 }

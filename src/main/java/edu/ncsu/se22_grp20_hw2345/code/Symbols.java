@@ -7,21 +7,18 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Data
-public class Symbols implements ASCIICharacters {
+public class Symbols extends ColumnData {
     private int count;
-    private String columnName;
-    private Integer columnIndex;
+
     private Map<String, Integer> symbolMap = new HashMap<>();
 
-    public Symbols(int c, String s) {
-        this.columnName = s;
-        this.columnIndex = c;
+    public Symbols(int columnIndex, String columnName) {
+        this.setColumnIndex(columnIndex);
+        this.setColumnName(columnName);
     }
 
-    public Symbols() {
 
-    }
-
+    @Override
     public void add(String c) {
         if (c != null && !c.equals("?")) {
             Map<String, Integer> symbolMap = this.getSymbolMap();
@@ -31,7 +28,7 @@ public class Symbols implements ASCIICharacters {
     }
 
     @Override
-    public String mid() {
+    public String mid(int decimalPlaces) {
         int count = -1;
         String mode = "";
         Map<String, Integer> symbolMap = this.getSymbolMap();
@@ -45,7 +42,7 @@ public class Symbols implements ASCIICharacters {
     }
 
     @Override
-    public Double div() {
+    public Double div(int decimalPlaces) {
         double count = this.getCount();
         AtomicReference<Double> entropy = new AtomicReference<>(0.0);
         this.getSymbolMap().values().forEach(y -> {
@@ -53,6 +50,11 @@ public class Symbols implements ASCIICharacters {
             double logOfProbability = Math.log(probability) / Math.log(2);
             entropy.set(entropy.get() - (probability * logOfProbability));
         });
-        return entropy.get();
+        return round(entropy.get(), decimalPlaces);
+    }
+
+    private double round(double value, int decimalPlaces) {
+        double scale = Math.pow(10, decimalPlaces);
+        return Math.round(value * scale) / scale;
     }
 }

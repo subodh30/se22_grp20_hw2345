@@ -146,16 +146,15 @@ class Eg {
 //            return mode=="a" and 1.37 <= entropy and entropy <=1.38 end
 
     public void sym() {
-        Symbols symbolsData = new Symbols();
+        Symbols symbolsData = new Symbols(0, "TestData");
         for (int q = 0; q < 4; q++) {
             symbolsData.add("a");
         }
-
         symbolsData.add("b");
         symbolsData.add("b");
         symbolsData.add("c");
-        String mode = symbolsData.mid();
-        Double entropy = symbolsData.div();
+        String mode = symbolsData.mid(2);
+        Double entropy = symbolsData.div(2);
         System.out.println("Mode = " + mode + "Entropy = " + entropy);
     }
 
@@ -167,10 +166,11 @@ class Eg {
 //  return 50<= mid and mid<= 52 and 30.5 <div and div<32 end
 
     public void num() {
-//        Numbers numbers = new Numbers();
-//        for (int i = 1; i <= 100; i++) {
-//
-//        }
+        Numbers numbers = new Numbers(0, "TestData");
+        for (int i = 1; i <= 100; i++) {
+            numbers.add(String.valueOf(i));
+        }
+
     }
 
 //    -- Print some stats on columns.
