@@ -15,13 +15,12 @@ public class CSV {
     public static List<Row> csv(String filePath) {
         List<Row> rows = new ArrayList<>();
         try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(filePath), StandardCharsets.UTF_8)) {
-            bufferedReader.lines().forEach(line -> rows.add(Row.builder()
-                    .cells(Arrays.stream(line.split(The.getArgs().get("separator").toString()))
-                            .collect(Collectors.toList()))
-                    .cooked(Arrays.stream(line.split(The.getArgs().get("separator").toString()))
-                            .collect(Collectors.toList()))
-                    .isEval(false)
-                    .build()));
+            List<String> lines = bufferedReader.lines().collect(Collectors.toList());
+            for (String line : lines) {
+                List<String> cells = Arrays.asList(line.split(The.getArgs().get("Separator").toString()));
+                rows.add(new Row(cells));
+            }
+
             return rows;
         } catch (IOException e) {
             e.printStackTrace();

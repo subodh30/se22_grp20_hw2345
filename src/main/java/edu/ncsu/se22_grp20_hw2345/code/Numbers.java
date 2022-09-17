@@ -1,34 +1,65 @@
 package edu.ncsu.se22_grp20_hw2345.code;
 
+import lombok.Data;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Random;
 
-//@Data
-public class Numbers implements ASCIICharacters {
-    private String columnName;
-    private Integer columnIndex;
-    private int count;
-    private List<Integer> data;
+@Data
+public class Numbers extends ColumnData {
 
-    public Numbers(List<String> data) {
-        this.data = data.stream().map(Integer::parseInt).collect(Collectors.toList());
-    }
+    private int count = 0;
+    private Double low = Double.MAX_VALUE;
+    private Double high = Double.MIN_VALUE;
+    private List<Double> has = new ArrayList<>();
+    private boolean isSorted;
+    private int w = 1;
 
-    public Numbers(int c, String s) {
-        this.columnIndex = c;
-        this.columnName = s;
+    public Numbers(int columnIndex, String columnName) {
+        if (columnName.contains("-")) {
+            w = -1;
+        }
+        setColumnName(columnName);
+        setColumnIndex(columnIndex);
     }
 
 
     @Override
-    public Integer mid(int decimalPlaces) {
-        return 0;
+    public Double mid(int decimalPlaces) {
+        return 0.0;
     }
 
     @Override
     public Double div(int decimalPlaces) {
-        return null;
+        return median();
+    }
+
+    //    function Num:add(v,    pos)
+//  if v~="?" then
+//    self.n  = self.n + 1
+//    self.lo = math.min(v, self.lo)
+//    self.hi = math.max(v, self.hi)
+//            if     #self._has < the.nums           then pos=1 + (#self._has)
+//    elseif math.random() < the.nums/self.n then pos=math.random(#self._has) end
+//    if pos then self.isSorted = false
+//    self._has[pos] = tonumber(v) end end end
+    @Override
+    public void add(String cellValue) {
+        int bucketSize = (Integer) The.getArgs().get("nums");
+        if (!cellValue.equals("?")) {
+            Double numValue = Double.parseDouble(cellValue);
+            count++;
+            low = Math.min(low, numValue);
+            high = Math.max(high, numValue);
+            if (has.size() < bucketSize) {
+                has.add(numValue);
+            } else {
+                int rnd = new Random().nextInt(has.size());
+                has.add(rnd, numValue);
+            }
+        }
     }
 
     private double round(double value, int decimalPlaces) {
@@ -46,24 +77,17 @@ public class Numbers implements ASCIICharacters {
     }
 
     //    Function for sorting the array
-    private List<Double> sortMyArray(List<String> arr) {
-        List<Double> newarr = new ArrayList<>(convertMyArray(arr));
-        for (int i = 0; i < newarr.size(); i++) {
-            for (int j = i + 1; j < newarr.size(); j++) {
-                double temp = 0;
-                if (newarr.get(i) > newarr.get(j)) {
-                    temp = newarr.get(i);
-                    newarr.set(i, newarr.get(j));
-                    newarr.set(j, temp);
-                }
-            }
+    public List<Double> nums() {
+        if (!isSorted) {
+            Collections.sort(has);
+            isSorted = true;
         }
-        return newarr;
+        return has;
     }
 
     //    *Function for Median
-    public Double median(List<String> arr) {
-        List<Double> sortedarr = new ArrayList<>(sortMyArray(arr));
+    public Double median() {
+        List<Double> sortedarr = nums();
         double median = 0;
         if (sortedarr.size() % 2 != 0) {
 //            there are odd number of elements in the sortedarray
@@ -74,7 +98,7 @@ public class Numbers implements ASCIICharacters {
             median = sortedarr.get(index) + sortedarr.get(index + 1);
             median /= 2;
         }
-        return median;
+        return round(median, 3);
     }
 
     public double mean_calc(List<String> arr) {

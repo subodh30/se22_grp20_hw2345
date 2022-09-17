@@ -3,27 +3,22 @@ package edu.ncsu.se22_grp20_hw2345.code;
 import lombok.Data;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Data
-public class Symbols implements ASCIICharacters {
+public class Symbols extends ColumnData {
     private int count;
-    private String columnName;
-    private Integer columnIndex;
+
     private Map<String, Integer> symbolMap = new HashMap<>();
-    private List<String> data;
 
-    public Symbols(int c, String s) {
-        this.columnName = s;
-        this.columnIndex = c;
+    public Symbols(int columnIndex, String columnName) {
+        this.setColumnIndex(columnIndex);
+        this.setColumnName(columnName);
     }
 
-    public Symbols(List<String> data) {
-        this.data = data;
-    }
 
+    @Override
     public void add(String c) {
         if (c != null && !c.equals("?")) {
             Map<String, Integer> symbolMap = this.getSymbolMap();
@@ -57,6 +52,7 @@ public class Symbols implements ASCIICharacters {
         });
         return round(entropy.get(), decimalPlaces);
     }
+
     private double round(double value, int decimalPlaces) {
         double scale = Math.pow(10, decimalPlaces);
         return Math.round(value * scale) / scale;

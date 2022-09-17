@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder
 public class Row {
-    List<String> cells;
-    boolean isEval;
-    List<String> cooked;
+    private List<String> cells;
+    private boolean isEval;
+    private List<String> cooked;
 
     public Row(List<String> t) {
         this.cells = t;

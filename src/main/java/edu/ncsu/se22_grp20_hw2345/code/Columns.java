@@ -1,55 +1,63 @@
 package edu.ncsu.se22_grp20_hw2345.code;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder
 public class Columns {
-    List<String> names;
-    //    Map<String, List<String>> allData;
-    List<ASCIICharacters> allData = new ArrayList<>();
-    //    List<String> klass;
-    //    Map<String, List<String>> X;
-//    Map<String, List<String>> Y;
-    List<ASCIICharacters> Y = new ArrayList<>();
-    List<ASCIICharacters> X = new ArrayList<>();
-    ASCIICharacters klass;
+    private List<String> names;
+    private List<ColumnData> allData = new ArrayList<>();
+    private List<ColumnData> Y;
+    private List<ColumnData> X;
+    private ColumnData klass;
 
-    public void read(List<String> names) {
-        this.names = names;
-        ASCIICharacters col;
-        for (int c = 0; c < names.size(); c++) {
-            if (Character.isUpperCase(names.get(c).charAt(0))) { //numeric
-                col = new Numbers(c, names.get(c));
-                allData.add(col);
-            } else { //symbols
-                col = new Symbols(c, names.get(c));
-                allData.add(col);
+    public Columns(List<String> columnNames) {
+        this.names = columnNames;
+        for (int i = 0; i < columnNames.size(); i++) {
+            if (Character.isUpperCase(names.get(i).charAt(0))) {
+                allData.add(new Numbers(i, names.get(i)));
+            } else {
+                allData.add(new Symbols(i, names.get(i)));
             }
-            String colName = names.get(c);
-            int n = colName.length();
-            if (colName.charAt(n - 1) != ':') {
-                if (colName.charAt(n - 1) == '+' || colName.charAt(n - 1) == '-') {
-                    Y.add(new Numbers(c, colName));
-                } else {
-                    X.add(new Numbers(c, colName));
-                }
-                if (colName.charAt(n - 1) == '!') {
-                    klass = col;
-                }
+            if(names.get(i).contains("!") && Character.isUpperCase(names.get(i).charAt(0))){
+                klass = new Numbers(i, names.get(i));
+            }else {
+                klass = new Symbols(i, names.get(i));
             }
         }
     }
 
-//    public void add(Columns columns) {
-//        for (String name : columns.getNames()) {
-//            if () {
-//
-//            }
-//        }
-//    }
+    public void add(List<String> values) {
+        for (int c = 0; c < names.size(); c++) {
+            allData.get(c).add(values.get(c));
+        }
+    }
+
+    public List<ColumnData> getY() {
+        Y = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            if (names.get(i).contains(":")) {
+                continue;
+            }
+            if (names.get(i).contains("+") || names.get(i).contains("-")) {
+                Y.add(allData.get(i));
+            }
+        }
+        return Y;
+    }
+
+    public List<ColumnData> getX() {
+        X = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            if (names.get(i).contains(":")) {
+                continue;
+            }
+            if (!names.get(i).contains("+") && !names.get(i).contains("-")) {
+                X.add(allData.get(i));
+            }
+        }
+        return X;
+    }
 }
