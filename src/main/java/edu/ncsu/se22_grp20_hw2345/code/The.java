@@ -7,9 +7,6 @@ import java.util.Map;
 
 @Data
 public class The {
-    private static The the = null;
-    private Map<String, Object> args;
-
     public static String helpString = "" +
             "CSV : summarized csv file\n" +
             "(c) 2022 Tim Menzies <timm@ieee.org> BSD-2 license\n" +
@@ -22,6 +19,8 @@ public class The {
             " -n  --nums      number of nums to keep                = 512\n" +
             " -s  --seed      random number seed                    = 10019\n" +
             " -S  --Seperator feild seperator                       = ,";
+    private static The the = null;
+    private Map<String, Object> args;
 
     private The() {
     }

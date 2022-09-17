@@ -1,6 +1,5 @@
 package edu.ncsu.se22_grp20_hw2345.code;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -17,9 +16,10 @@ public class Row {
         this.isEval = false;
         this.cooked = clone_list(t);
     }
-    public static List<String> clone_list(List<String> record){
+
+    public static List<String> clone_list(List<String> record) {
         List<String> temp_element = new ArrayList<String>();
-        for(String element:record){
+        for (String element : record) {
             temp_element.add(element);
         }
         return temp_element;

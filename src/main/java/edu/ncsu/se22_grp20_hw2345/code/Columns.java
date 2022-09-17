@@ -21,9 +21,9 @@ public class Columns {
             } else {
                 allData.add(new Symbols(i, names.get(i)));
             }
-            if(names.get(i).contains("!") && Character.isUpperCase(names.get(i).charAt(0))){
+            if (names.get(i).contains("!") && Character.isUpperCase(names.get(i).charAt(0))) {
                 klass = new Numbers(i, names.get(i));
-            }else {
+            } else {
                 klass = new Symbols(i, names.get(i));
             }
         }
