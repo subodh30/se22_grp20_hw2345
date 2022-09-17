@@ -13,6 +13,7 @@ public class Data {
     public Data(String filePath) {
         List<Row> rows = CSV.csv(filePath);
         for (Row row : rows) {
+
             add(row);
         }
     }

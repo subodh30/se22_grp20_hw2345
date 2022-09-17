@@ -1,32 +1,39 @@
 package edu.ncsu.se22_grp20_hw2345.code;
 
+import lombok.Data;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-//@Data
+@Data
 public class Numbers extends ColumnData {
 
     private int count = 0;
-    private int low = Integer.MAX_VALUE;
-    private int high = Integer.MIN_VALUE;
-    List<Integer> has = new ArrayList<>();
-    boolean isSorted = true;
+    private Double low = Double.MAX_VALUE;
+    private Double high = Double.MIN_VALUE;
+    private List<Double> has = new ArrayList<>();
+    private boolean isSorted;
+    private int w = 1;
 
     public Numbers(int columnIndex, String columnName) {
+        if (columnName.contains("-")) {
+            w = -1;
+        }
         setColumnName(columnName);
         setColumnIndex(columnIndex);
     }
 
 
     @Override
-    public Integer mid(int decimalPlaces) {
-        return 0;
+    public Double mid(int decimalPlaces) {
+        return 0.0;
     }
 
     @Override
     public Double div(int decimalPlaces) {
-        return 0.0;
+        return median();
     }
 
     //    function Num:add(v,    pos)
@@ -40,8 +47,9 @@ public class Numbers extends ColumnData {
 //    self._has[pos] = tonumber(v) end end end
     @Override
     public void add(String cellValue) {
-        int numValue = Integer.parseInt(cellValue), bucketSize = (Integer) The.getArgs().get("nums");
-        if (cellValue != "?") {
+        int bucketSize = (Integer) The.getArgs().get("nums");
+        if (!cellValue.equals("?")) {
+            Double numValue = Double.parseDouble(cellValue);
             count++;
             low = Math.min(low, numValue);
             high = Math.max(high, numValue);
@@ -69,24 +77,17 @@ public class Numbers extends ColumnData {
     }
 
     //    Function for sorting the array
-    private List<Double> sortMyArray(List<String> arr) {
-        List<Double> newarr = new ArrayList<>(convertMyArray(arr));
-        for (int i = 0; i < newarr.size(); i++) {
-            for (int j = i + 1; j < newarr.size(); j++) {
-                double temp = 0;
-                if (newarr.get(i) > newarr.get(j)) {
-                    temp = newarr.get(i);
-                    newarr.set(i, newarr.get(j));
-                    newarr.set(j, temp);
-                }
-            }
+    public List<Double> nums() {
+        if (!isSorted) {
+            Collections.sort(has);
+            isSorted = true;
         }
-        return newarr;
+        return has;
     }
 
     //    *Function for Median
-    public Double median(List<String> arr) {
-        List<Double> sortedarr = new ArrayList<>(sortMyArray(arr));
+    public Double median() {
+        List<Double> sortedarr = nums();
         double median = 0;
         if (sortedarr.size() % 2 != 0) {
 //            there are odd number of elements in the sortedarray
@@ -97,7 +98,7 @@ public class Numbers extends ColumnData {
             median = sortedarr.get(index) + sortedarr.get(index + 1);
             median /= 2;
         }
-        return median;
+        return round(median, 3);
     }
 
     public double mean_calc(List<String> arr) {

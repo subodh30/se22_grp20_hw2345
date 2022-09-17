@@ -1,4 +1,7 @@
-package edu.ncsu.se22_grp20_hw2345.code;
+package test;
+
+import edu.ncsu.se22_grp20_hw2345.code.*;
+import org.w3c.dom.ls.LSOutput;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,6 +25,9 @@ public class TestEngine {
         boolean status = false;
         boolean out = false;
         String msg = "";
+        if (k.equals("nothing")) {
+            return true;
+        }
         if (!eg.sortedList().contains(k)) {
             return false;
         }
@@ -170,11 +176,65 @@ class Eg {
         for (int i = 1; i <= 100; i++) {
             numbers.add(String.valueOf(i));
         }
-
+        Double mid = numbers.mid(2);
+        Double std = numbers.div(2);
+        assert mid >= 50 && std > 30.5 && std < 32;
+        System.out.printf("mid = " + mid + " div = " + std);
     }
 
-//    -- Print some stats on columns.
-//    function eg.stats(   data,mid,div)
+    public boolean bignum() {
+        Numbers numbers = new Numbers(0, "TestData");
+        The.getArgs().put("nums", 32);
+        for (int q = 1; q <= 100; q++) {
+            numbers.add(String.valueOf(q));
+        }
+        System.out.printf(numbers.nums().toString());
+        return 32 == numbers.getHas().size();
+    }
+
+//    function eg.csv(   n)
+//    n=0
+//    csv("../data/auto93.csv",function(row)
+//    n=n+1; if n> 10 then return else oo(row) end end); return true end
+
+    public boolean csv() {
+        int n = 0;
+        List<Row> rows = CSV.csv(The.getArgs().get("file").toString());
+        for (int i = 0; i < 10; i++) {
+            System.out.println(rows.get(i).getCells().toString());
+        }
+        return true;
+    }
+
+//    function eg.data(   d)
+//    d = Data("../data/auto93.csv")
+//  for _,col in pairs(d.cols.y) do oo(col) end
+//  return true
+//    end
+
+
+    //    at 4 :hi 5140 :isSorted false :lo 1613 :n 398 :name Lbs- :w -1}
+//{:at 5 :hi 24.8 :isSorted false :lo 8 :n 398 :name Acc+ :w 1}
+//        {:at 8 :hi 50 :isSorted false :lo 10 :n 398 :name Mpg+ :w 1}
+    public boolean data() {
+        Data data = new Data("C:\\Users\\Ameya Vaichalkar\\OneDrive\\Documents\\NCSU Projects\\SeHw2345\\se22_grp20_hw2345\\src\\main\\resources\\data.csv");
+        List<ColumnData> columns = data.getColumns().getY();
+        for (ColumnData column : columns) {
+            Numbers numberColumn = (Numbers) column;
+            System.out.println("");
+            System.out.print(":at " + numberColumn.getColumnIndex());
+            System.out.print(" :hi " + numberColumn.getHigh());
+            System.out.print(" :isSorted " + numberColumn.isSorted());
+            System.out.print(" :lo " + numberColumn.getLow());
+            System.out.print(" :n " + numberColumn.getCount());
+            System.out.print(" :name " + numberColumn.getColumnName());
+            System.out.print(" :w " + numberColumn.getW());
+        }
+        return true;
+    }
+
+
+    //    unction eg.stats(   data,mid,div)
 //    data = Data("../data/auto93.csv")
 //    div=function(col) return col:div() end
 //    mid=function(col) return col:mid() end
@@ -183,10 +243,31 @@ class Eg {
 //    print("ymid", o( data:stats(2,data.cols.y, mid)))
 //    print("ydiv", o( data:stats(3,data.cols.y, div)))
 //            return true
-//    end
-
     public boolean stats() {
-        Data data = new Data("dfgh");
+        Data data = new Data(The.getArgs().get("file").toString());
+        Map<String, String> xmidMap = data.stats(2, data.getColumns().getX(), "mid");
+        System.out.print("xmid ");
+        for (String colName : xmidMap.keySet()) {
+            System.out.print(" :" + colName + " " + xmidMap.get(colName));
+        }
+        System.out.println("");
+        Map<String, String> xdivMap = data.stats(3, data.getColumns().getX(), "div");
+        System.out.print("xdiv ");
+        for (String colName : xdivMap.keySet()) {
+            System.out.print(" :" + colName + " " + xdivMap.get(colName));
+        }
+        Map<String, String> ymidMap = data.stats(2, data.getColumns().getY(), "mid");
+        System.out.println("");
+        System.out.print("ymid ");
+        for (String colName : ymidMap.keySet()) {
+            System.out.print(" :" + colName + " " + ymidMap.get(colName));
+        }
+        Map<String, String> ydivMap = data.stats(3, data.getColumns().getY(), "div");
+        System.out.println("");
+        System.out.print("ydiv ");
+        for (String colName : ydivMap.keySet()) {
+            System.out.print(" :" + colName + " " + ydivMap.get(colName));
+        }
         return true;
     }
 

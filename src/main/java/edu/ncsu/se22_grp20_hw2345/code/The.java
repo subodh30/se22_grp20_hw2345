@@ -33,12 +33,12 @@ public class The {
         return the.args;
     }
 
-    private static void initialize(){
+    private static void initialize() {
         the = new The();
         the.args = new HashMap<>();
-        the.args.put("eg", "nothing");
+        the.args.put("eg", "stats");
         the.args.put("dump", true);
-        the.args.put("file", "/data.csv");
+        the.args.put("file", "src/main/resources/data.csv");
         the.args.put("help", false);
         the.args.put("nums", 512);
         the.args.put("seed", 10019);
@@ -51,13 +51,13 @@ public class The {
             for (String arg : getArgs().keySet()) {
                 String value = getArgs().get(arg).toString();
                 if (key.equals("-" + arg.charAt(0)) || key.equals("--" + arg)) {
-                    if(isBoolean(value)) {
+                    if (isBoolean(value)) {
                         getArgs().put(arg, !getBoolean(value));
                     } else if (isInteger(value)) {
-                        getArgs().put(arg, getInteger(args[i+1]));
+                        getArgs().put(arg, getInteger(args[i + 1]));
                         i++;
-                    }else{
-                        getArgs().put(arg, args[i+1]);
+                    } else {
+                        getArgs().put(arg, args[i + 1]);
                         i++;
                     }
                     break;
@@ -65,7 +65,7 @@ public class The {
             }
         }
 
-        if((Boolean) getArgs().get("help")){
+        if ((Boolean) getArgs().get("help")) {
             System.out.println(The.helpString);
             System.exit(0);
         }
@@ -92,7 +92,8 @@ public class The {
             return false;
         }
     }
-    private static int getInteger(String value){
+
+    private static int getInteger(String value) {
         return Integer.parseInt(value);
     }
 
