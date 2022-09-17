@@ -19,21 +19,13 @@ public class Data {
 
     public void add(Row row) {
         if (null == this.getColumns()) {
-            this.setColumns(Columns.builder()
-                    .names(row.getCells())
-                    .build());
+            setColumns(new Columns(row.getCells()));
         } else {
-            this.getRows().add(row);
+            getColumns().add(row.getCells());
         }
     }
 
 
-    //    function Data:stats(  places,showCols,fun,    t,v)
-//    showCols, fun = showCols or self.cols.y, fun or "mid"
-//    t={}; for _,col in pairs(showCols) do
-//    v=fun(col)
-//    v=type(v)=="number" and rnd(v,places) or v
-//    t[col.name]=v end; return t end
     private double round(double value, int decimalPlaces) {
         double scale = Math.pow(10, decimalPlaces);
         return Math.round(value * scale) / scale;
