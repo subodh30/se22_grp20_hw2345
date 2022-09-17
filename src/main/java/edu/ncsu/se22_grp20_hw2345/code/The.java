@@ -35,7 +35,7 @@ public class The {
     private static void initialize() {
         the = new The();
         the.args = new HashMap<>();
-        the.args.put("eg", "stats");
+        the.args.put("eg", "ALL");
         the.args.put("dump", true);
         the.args.put("file", "src/main/resources/data.csv");
         the.args.put("help", false);

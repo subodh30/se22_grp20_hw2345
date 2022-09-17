@@ -17,7 +17,7 @@ class Eg {
         this.fails = 0;
     }
 
-    void bad() {
+    void BAD() {
         System.out.println("The field does not exist");
     }
 
@@ -39,7 +39,7 @@ class Eg {
         return methodsList;
     }
 
-    public boolean displayTestNames() {
+    public boolean LS() {
         System.out.println("\nExamples lua csv -e ...");
         for (String testName : sortedList()) {
             System.out.println(testName);
@@ -48,7 +48,7 @@ class Eg {
     }
 
 
-    public boolean runAllTests() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public boolean ALL() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         for (String method : sortedList()) {
             if (method.equals("ALL")) {
                 System.out.println("\n-----------------------------------");
@@ -60,7 +60,7 @@ class Eg {
         return true;
     }
 
-    public void theTest() {
+    public void the() {
         System.out.println(The.getArgs());
     }
 
