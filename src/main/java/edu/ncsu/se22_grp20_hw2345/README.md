@@ -33,6 +33,9 @@
         It returns the standard deviation for all the values
         The value returned is (90th percentile - 10th percentile)/2.56
 ## Row
-    def 
+    def clone_list()
+        This function initializes 3 variables in the class constructor.
+        Cells is a copy of the input parameter
+        Cooked is a deep copy of the input parameter i.e. a List<String>
 ## Symbols
 ## The
