@@ -101,28 +101,28 @@ public class Numbers extends ColumnData {
         return round(median, 3);
     }
 
-    public double mean_calc(List<String> arr) {
+    public double mean_calc() {
         double mean;
-        List<Double> newarr = convertMyArray(arr);
+//        List<Double> newarr = convertMyArray(arr);
         double sum = 0;
-        for (int i = 0; i < newarr.size(); i++) {
-            sum += newarr.get(i);
+        for (int i = 0; i < has.size(); i++) {
+            sum += has.get(i);
         }
-        mean = sum / (newarr.size());
+        mean = sum / (has.size());
         return mean;
     }
 
-    public Double standardDeviation(List<String> arr) {
-        List<Double> newarr = convertMyArray(arr);
-        int arr_length = newarr.size();
+    public Double standardDeviation() {
+//        List<Double> newarr = convertMyArray(arr);
+        int arr_length = has.size();
         double sum = 0.0;
         double std_deviation = 0.0;
         for (int i = 0; i < arr_length; i++) {
-            sum += newarr.get(i);
+            sum += has.get(i);
         }
-        double mean = mean_calc(arr);
+        double mean = mean_calc();
         for (int i = 0; i < arr_length; i++) {
-            std_deviation += Math.pow(newarr.get(i) - mean, 2);
+            std_deviation += Math.pow(has.get(i) - mean, 2);
         }
         return Math.sqrt(std_deviation / arr_length);
     }
