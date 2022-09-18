@@ -38,4 +38,14 @@
         Cells is a copy of the input parameter
         Cooked is a deep copy of the input parameter i.e. a List<String>
 ## Symbols
+    def add()
+        This function takes in the symbol as a parameter and checks whether its not null and is not a '?'.
+        If the conditions are met, the count is incremented and added to a map. 
+
+    def mid()
+        This function returns the symbol from the symbol map having the highest frequency.
+        It returns entropy value by calculating probability. 
+
+    
+
 ## The
