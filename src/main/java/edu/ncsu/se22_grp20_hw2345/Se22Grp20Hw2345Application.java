@@ -18,6 +18,8 @@ public class Se22Grp20Hw2345Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         The.setThe(args);
+        System.out.println(The.getArgs().toString());
         TestEngine.runs(The.getArgs().get("eg").toString());
+
     }
 }
