@@ -26,15 +26,15 @@ public class Numbers extends ColumnData {
     }
 
 
-    @Override
-    public Double mid(int decimalPlaces) {
-        return 0.0;
-    }
+//    @Override
+//    public Double mid(int decimalPlaces) {
+//        return 0.0;
+//    }
 
-    @Override
-    public Double div(int decimalPlaces) {
-        return median();
-    }
+//    @Override
+//    public Double div(int decimalPlaces) {
+//        return median();
+//    }
 
     //    function Num:add(v,    pos)
 //  if v~="?" then
@@ -86,7 +86,7 @@ public class Numbers extends ColumnData {
     }
 
     //    *Function for Median
-    public Double median() {
+    public Double mid(int decimalPlaces) {
         List<Double> sortedarr = nums();
         double median = 0;
         if (sortedarr.size() % 2 != 0) {
@@ -98,7 +98,7 @@ public class Numbers extends ColumnData {
             median = sortedarr.get(index) + sortedarr.get(index + 1);
             median /= 2;
         }
-        return round(median, 3);
+        return round(median, decimalPlaces);
     }
 
     private double calculateTotal(){
@@ -126,7 +126,7 @@ public class Numbers extends ColumnData {
         return sum;
     }
 
-    public Double div() {
+    public Double div(int decimalPlaces) {
 //        List<Double> newarr = convertMyArray(arr);
         int arr_length = has.size();
         double sum = 0.0;
@@ -142,6 +142,6 @@ public class Numbers extends ColumnData {
         double p90 = percentileCalculator(90);
         double p10 = percentileCalculator(10);
         double output = (p90 - p10)/2.56;
-        return output;
+        return round(output, decimalPlaces);
     }
 }
