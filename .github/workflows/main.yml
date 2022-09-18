@@ -34,7 +34,7 @@ jobs:
         run: mvn --batch-mode -DskipTests package
 
       - name: Test
-        run: java -jar .\target\se22_grp20_hw2345.jar --eg LS
+        run: java -jar ./target/se22_grp20_hw2345.jar --eg LS
 
 #      - name: Test
 #        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
