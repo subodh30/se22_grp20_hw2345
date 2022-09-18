@@ -101,18 +101,32 @@ public class Numbers extends ColumnData {
         return round(median, 3);
     }
 
-    public double mean_calc() {
-        double mean;
-//        List<Double> newarr = convertMyArray(arr);
+    private double calculateTotal(){
         double sum = 0;
         for (int i = 0; i < has.size(); i++) {
             sum += has.get(i);
         }
+        return sum;
+    }
+
+    public double mid() {
+        double mean;
+//        List<Double> newarr = convertMyArray(arr);
+        double sum = calculateTotal();
         mean = sum / (has.size());
         return mean;
     }
 
-    public Double standardDeviation() {
+    private double percentileCalculator(int percentile){
+        double sum=0;
+        double total = calculateTotal();
+        for(int i=0;  i<has.size() && sum < (percentile * 0.01 * total); i++){
+            sum += has.get(i);
+        }
+        return sum;
+    }
+
+    public Double div() {
 //        List<Double> newarr = convertMyArray(arr);
         int arr_length = has.size();
         double sum = 0.0;
@@ -120,10 +134,14 @@ public class Numbers extends ColumnData {
         for (int i = 0; i < arr_length; i++) {
             sum += has.get(i);
         }
-        double mean = mean_calc();
+        double mean = mid();
         for (int i = 0; i < arr_length; i++) {
             std_deviation += Math.pow(has.get(i) - mean, 2);
         }
-        return Math.sqrt(std_deviation / arr_length);
+        double dev =  Math.sqrt(std_deviation / arr_length);
+        double p90 = percentileCalculator(90);
+        double p10 = percentileCalculator(10);
+        double output = (p90 - p10)/2.56;
+        return output;
     }
 }
