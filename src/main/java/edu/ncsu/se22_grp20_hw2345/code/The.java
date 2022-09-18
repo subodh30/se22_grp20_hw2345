@@ -51,7 +51,7 @@ public class The {
                 String value = getArgs().get(arg).toString();
                 if (key.equals("-" + arg.charAt(0)) || key.equals("--" + arg)) {
                     if (isBoolean(value)) {
-                        getArgs().put(arg, !getBoolean(value));
+                        getArgs().put(arg, getBoolean(value));
                     } else if (isInteger(value)) {
                         getArgs().put(arg, getInteger(args[i + 1]));
                         i++;
@@ -71,12 +71,10 @@ public class The {
     }
 
     private static boolean isBoolean(String value) {
-        try {
-            Boolean.parseBoolean(value);
+        if ("True".equalsIgnoreCase(value) || "False".equalsIgnoreCase(value)) {
             return true;
-        } catch (Exception e) {
-            return false;
         }
+        return false;
     }
 
     private static boolean getBoolean(String value) {
