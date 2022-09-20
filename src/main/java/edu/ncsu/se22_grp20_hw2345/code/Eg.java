@@ -77,7 +77,7 @@ class Eg {
         Double std = numbers.div(2);
         System.out.println("mid = " + mid + " div = " + std);
         try {
-            assert mid >= 50 && std > 30.5 && std < 32;
+            assert mid >= 50 && std < 30 && std > 25;
         } catch (Exception e) {
             return false;
         }
@@ -87,6 +87,7 @@ class Eg {
     public boolean bignum() {
         Numbers numbers = new Numbers(0, "TestData");
         The.getArgs().put("nums", 32);
+        System.out.println("YO"+The.getArgs().get("nums"));
         for (int q = 1; q <= 100; q++) {
             numbers.add(String.valueOf(q));
         }

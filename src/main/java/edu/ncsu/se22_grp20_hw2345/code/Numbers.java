@@ -29,6 +29,7 @@ public class Numbers extends ColumnData {
     @Override
     public void add(String cellValue) {
         int bucketSize = (Integer) The.getArgs().get("nums");
+//        System.out.println(bucketSize);
         if (!cellValue.equals("?")) {
             Double numValue = Double.parseDouble(cellValue);
             count++;
@@ -38,7 +39,7 @@ public class Numbers extends ColumnData {
                 has.add(numValue);
             } else {
                 int rnd = new Random().nextInt(has.size());
-                has.add(rnd, numValue);
+                has.set(rnd, numValue);
             }
         }
     }
@@ -123,6 +124,6 @@ public class Numbers extends ColumnData {
         double p90 = percentileCalculator(90);
         double p10 = percentileCalculator(10);
         double output = (p90 - p10) / 2.56;
-        return round(output, decimalPlaces);
+        return round(dev, decimalPlaces);
     }
 }
