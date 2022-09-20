@@ -27,25 +27,6 @@ public class Numbers extends ColumnData {
 
 
     @Override
-    public Double mid(int decimalPlaces) {
-        return 0.0;
-    }
-
-    @Override
-    public Double div(int decimalPlaces) {
-        return median();
-    }
-
-    //    function Num:add(v,    pos)
-//  if v~="?" then
-//    self.n  = self.n + 1
-//    self.lo = math.min(v, self.lo)
-//    self.hi = math.max(v, self.hi)
-//            if     #self._has < the.nums           then pos=1 + (#self._has)
-//    elseif math.random() < the.nums/self.n then pos=math.random(#self._has) end
-//    if pos then self.isSorted = false
-//    self._has[pos] = tonumber(v) end end end
-    @Override
     public void add(String cellValue) {
         int bucketSize = (Integer) The.getArgs().get("nums");
         if (!cellValue.equals("?")) {
@@ -86,7 +67,7 @@ public class Numbers extends ColumnData {
     }
 
     //    *Function for Median
-    public Double median() {
+    public Double mid(int decimalPlaces) {
         List<Double> sortedarr = nums();
         double median = 0;
         if (sortedarr.size() % 2 != 0) {
@@ -98,32 +79,50 @@ public class Numbers extends ColumnData {
             median = sortedarr.get(index) + sortedarr.get(index + 1);
             median /= 2;
         }
-        return round(median, 3);
+        return round(median, decimalPlaces);
     }
 
-    public double mean_calc(List<String> arr) {
-        double mean;
-        List<Double> newarr = convertMyArray(arr);
+    private double calculateTotal() {
         double sum = 0;
-        for (int i = 0; i < newarr.size(); i++) {
-            sum += newarr.get(i);
+        for (int i = 0; i < has.size(); i++) {
+            sum += has.get(i);
         }
-        mean = sum / (newarr.size());
+        return sum;
+    }
+
+    public double mid() {
+        double mean;
+//        List<Double> newarr = convertMyArray(arr);
+        double sum = calculateTotal();
+        mean = sum / (has.size());
         return mean;
     }
 
-    public Double standardDeviation(List<String> arr) {
-        List<Double> newarr = convertMyArray(arr);
-        int arr_length = newarr.size();
+    private double percentileCalculator(int percentile) {
+        double sum = 0;
+        double total = calculateTotal();
+        for (int i = 0; i < has.size() && sum < (percentile * 0.01 * total); i++) {
+            sum += has.get(i);
+        }
+        return sum;
+    }
+
+    public Double div(int decimalPlaces) {
+//        List<Double> newarr = convertMyArray(arr);
+        int arr_length = has.size();
         double sum = 0.0;
         double std_deviation = 0.0;
         for (int i = 0; i < arr_length; i++) {
-            sum += newarr.get(i);
+            sum += has.get(i);
         }
-        double mean = mean_calc(arr);
+        double mean = mid();
         for (int i = 0; i < arr_length; i++) {
-            std_deviation += Math.pow(newarr.get(i) - mean, 2);
+            std_deviation += Math.pow(has.get(i) - mean, 2);
         }
-        return Math.sqrt(std_deviation / arr_length);
+        double dev = Math.sqrt(std_deviation / arr_length);
+        double p90 = percentileCalculator(90);
+        double p10 = percentileCalculator(10);
+        double output = (p90 - p10) / 2.56;
+        return round(output, decimalPlaces);
     }
 }
