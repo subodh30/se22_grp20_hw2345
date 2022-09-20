@@ -4,7 +4,7 @@ import edu.ncsu.se22_grp20_hw2345.code.The;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import test.TestEngine;
+import edu.ncsu.se22_grp20_hw2345.code.Application;
 
 @SpringBootApplication
 public class Se22Grp20Hw2345Application implements CommandLineRunner {
@@ -19,7 +19,7 @@ public class Se22Grp20Hw2345Application implements CommandLineRunner {
     public void run(String... args) throws Exception {
         The.setThe(args);
         System.out.println(The.getArgs().toString());
-        TestEngine.runs(The.getArgs().get("eg").toString());
+        Application.runs(The.getArgs().get("eg").toString());
 
     }
 }
