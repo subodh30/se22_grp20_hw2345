@@ -10,7 +10,7 @@ class ApplicationTest {
     @Test
     void runs() {
         try {
-            Assert.assertTrue(Application.runs("ALL"));
+            Assert.assertTrue(Application.runs("bignum"));
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
