@@ -33,17 +33,17 @@ jobs:
       - name: Build
         run: mvn --batch-mode -DskipTests package
 
-      - name: Test
-        run: java -jar ./target/se22_grp20_hw2345.jar --eg LS
-
 #      - name: Test
-#        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+#        run: java -jar ./target/se22_grp20_hw2345.jar --eg LS
 
-#      - name: Report
-#        uses: dorny/test-reporter@v1
-#        if: always()
-#        with:
-#          name: Maven Tests
-#          path: target/surefire-reports/*.xml
-#          reporter: java-junit
-#          fail-on-error: true
+      - name: Test
+        run: mvn test
+
+      - name: Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Maven Tests
+          path: target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true

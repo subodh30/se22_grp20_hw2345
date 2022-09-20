@@ -1,70 +1,55 @@
-package test;
-
-import edu.ncsu.se22_grp20_hw2345.code.*;
+package edu.ncsu.se22_grp20_hw2345.code;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 class Eg {
 
+    public List<String> methods;
     int fails;
 
     public Eg() {
         this.fails = 0;
+        methods = Arrays.stream(Eg.class.getDeclaredMethods()).map(Method::getName).sorted().collect(Collectors.toList());
     }
 
-    void BAD() {
-        System.out.println("The field does not exist");
-    }
-
-    public List<String> sortedList() {
-        List<String> methodsList = new ArrayList<>();
-        try {
-
-            Class<Eg> classobj = Eg.class;
-            Method[] methods = classobj.getMethods();
-
-            for (Method method : methods) {
-                String methodName = method.getName();
-                methodsList.add(methodName);
+    public boolean ALL() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        for (String method : methods) {
+            if (!method.equals("ALL")) {
+                System.out.println("\n-----------------------------------");
+                if (!Application.runs(method)) {
+                    fails++;
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        Collections.sort(methodsList);
-        return methodsList;
+
+        System.out.println(fails + " Tests failed.");
+        return fails == 0;
+    }
+
+    boolean BAD() {
+        System.out.println("The field does not exist");
+        return true;
     }
 
     public boolean LS() {
         System.out.println("\nExamples lua csv -e ...");
-        for (String testName : sortedList()) {
-            System.out.println(testName);
+        for (String method : methods) {
+            System.out.println(method);
         }
         return true;
     }
 
-
-    public boolean ALL() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        for (String method : sortedList()) {
-            if (method.equals("ALL")) {
-                System.out.println("\n-----------------------------------");
-                if (!TestEngine.runs(method)) {
-                    fails += 1;
-                }
-            }
-        }
-        return true;
-    }
-
-    public void the() {
+    public boolean the() {
         System.out.println(The.getArgs());
+        return true;
     }
 
-    public void sym() {
+    public boolean sym() {
         Symbols symbolsData = new Symbols(0, "TestData");
         for (int q = 0; q < 4; q++) {
             symbolsData.add("a");
@@ -74,18 +59,29 @@ class Eg {
         symbolsData.add("c");
         String mode = symbolsData.mid(2);
         Double entropy = symbolsData.div(2);
-        System.out.println("Mode = " + mode + "Entropy = " + entropy);
+        System.out.println("Mode = " + mode + "  Entropy = " + entropy);
+        try {
+            assert mode.equals("a") && entropy == 1.38;
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
-    public void num() {
+    public boolean num() {
         Numbers numbers = new Numbers(0, "TestData");
         for (int i = 1; i <= 100; i++) {
             numbers.add(String.valueOf(i));
         }
         Double mid = numbers.mid(2);
         Double std = numbers.div(2);
-        assert mid >= 50 && std > 30.5 && std < 32;
-        System.out.printf("mid = " + mid + " div = " + std);
+        System.out.println("mid = " + mid + " div = " + std);
+        try {
+            assert mid >= 50 && std > 30.5 && std < 32;
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public boolean bignum() {

@@ -1,6 +1,4 @@
-package test;
-
-import edu.ncsu.se22_grp20_hw2345.code.The;
+package edu.ncsu.se22_grp20_hw2345.code;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,16 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class TestEngine {
-
-    //    private static Map<String, Object> theMap;
-    static Eg eg = new Eg();
-    private static TestEngine testEngine;
+public class Application {
     private static final Map<String, Object> old = new HashMap<>();
+    static Eg eg = new Eg();
+    private static Application app;
 
-    private TestEngine() {
-        if (testEngine == null) {
-            testEngine = new TestEngine();
+    private Application() {
+        if (app == null) {
+            app = new Application();
         }
     }
 
@@ -28,7 +24,7 @@ public class TestEngine {
         if (k.equals("nothing")) {
             return true;
         }
-        if (!eg.sortedList().contains(k)) {
+        if (!eg.methods.contains(k)) {
             return false;
         }
         Random generator = new Random(Long.parseLong(The.getArgs().get("seed").toString()));
@@ -58,7 +54,7 @@ public class TestEngine {
             The.getArgs().put(key, old.get(key));
         }
         msg = status ? out ? "PASS" : "FAIL" : "CRASH";
-        System.out.println("\n!!!!!!\t" + msg+"\t" + k +"\t"+ status);
+        System.out.println("\n!!!!!!\t" + msg + "\t" + k + "\t" + status);
         return out;
     }
 }
