@@ -11,42 +11,37 @@ public class Data {
 
     //implement stats, readFile
     public Data(String filePath) {
-        addData(filePath);
-    }
-
-    public void addData(String src) {
-        List<Row> rows = CSV.csv(src);
+        List<Row> rows = CSV.csv(filePath);
         for (Row row : rows) {
-            add(row, this);
+
+            add(row);
         }
     }
 
-    public void add(Row row, Data data) {
-        if (null == data.getColumns()) {
-            data.setColumns(Columns.builder()
-                    .names(row.getCells())
-                    .build());
+    public void add(Row row) {
+        if (null == this.getColumns()) {
+            setColumns(new Columns(row.getCells()));
         } else {
-            data.getRows().add(row);
+            getColumns().add(row.getCells());
         }
     }
 
-    public Map<String, String> stats(int decimalPlaces, Map<String, List<String>> showCols, String functionName) {
+
+    private double round(double value, int decimalPlaces) {
+        double scale = Math.pow(10, decimalPlaces);
+        return Math.round(value * scale) / scale;
+    }
+
+    public Map<String, String> stats(int decimalPlaces, List<ColumnData> showCols, String functionName) {
         Map<String, String> stats = new HashMap<>();
-        for (Map.Entry<String, List<String>> entry : showCols.entrySet()) {
-            ASCIICharacters column;
-            if (Character.isUpperCase(entry.getKey().charAt(0))) {
-                column = new Numbers(entry.getValue());
-            } else {
-                column = new Symbols(entry.getValue());
-            }
+        for (ColumnData column : showCols) {
             String value;
             if (functionName.equals("mid")) {
                 value = column.mid(decimalPlaces).toString();
             } else {
                 value = column.div(decimalPlaces).toString();
             }
-            stats.put(entry.getKey(), value);
+            stats.put(column.getColumnName(), value);
         }
         return stats;
     }

@@ -1,34 +1,46 @@
 package edu.ncsu.se22_grp20_hw2345.code;
 
+import lombok.Data;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Random;
 
-//@Data
-public class Numbers implements ASCIICharacters {
-    private String columnName;
-    private Integer columnIndex;
-    private int count;
-    private List<Integer> data;
+@Data
+public class Numbers extends ColumnData {
 
-    public Numbers(List<String> data) {
-        this.data = data.stream().map(Integer::parseInt).collect(Collectors.toList());
-    }
+    private int count = 0;
+    private Double low = Double.MAX_VALUE;
+    private Double high = Double.MIN_VALUE;
+    private List<Double> has = new ArrayList<>();
+    private boolean isSorted;
+    private int w = 1;
 
-    public Numbers(int c, String s) {
-        this.columnIndex = c;
-        this.columnName = s;
+    public Numbers(int columnIndex, String columnName) {
+        if (columnName.contains("-")) {
+            w = -1;
+        }
+        setColumnName(columnName);
+        setColumnIndex(columnIndex);
     }
 
 
     @Override
-    public Integer mid(int decimalPlaces) {
-        return 0;
-    }
-
-    @Override
-    public Double div(int decimalPlaces) {
-        return null;
+    public void add(String cellValue) {
+        int bucketSize = (Integer) The.getArgs().get("nums");
+        if (!cellValue.equals("?")) {
+            Double numValue = Double.parseDouble(cellValue);
+            count++;
+            low = Math.min(low, numValue);
+            high = Math.max(high, numValue);
+            if (has.size() < bucketSize) {
+                has.add(numValue);
+            } else {
+                int rnd = new Random().nextInt(has.size());
+                has.add(rnd, numValue);
+            }
+        }
     }
 
     private double round(double value, int decimalPlaces) {
@@ -46,24 +58,17 @@ public class Numbers implements ASCIICharacters {
     }
 
     //    Function for sorting the array
-    private List<Double> sortMyArray(List<String> arr) {
-        List<Double> newarr = new ArrayList<>(convertMyArray(arr));
-        for (int i = 0; i < newarr.size(); i++) {
-            for (int j = i + 1; j < newarr.size(); j++) {
-                double temp = 0;
-                if (newarr.get(i) > newarr.get(j)) {
-                    temp = newarr.get(i);
-                    newarr.set(i, newarr.get(j));
-                    newarr.set(j, temp);
-                }
-            }
+    public List<Double> nums() {
+        if (!isSorted) {
+            Collections.sort(has);
+            isSorted = true;
         }
-        return newarr;
+        return has;
     }
 
     //    *Function for Median
-    public Double median(List<String> arr) {
-        List<Double> sortedarr = new ArrayList<>(sortMyArray(arr));
+    public Double mid(int decimalPlaces) {
+        List<Double> sortedarr = nums();
         double median = 0;
         if (sortedarr.size() % 2 != 0) {
 //            there are odd number of elements in the sortedarray
@@ -74,32 +79,50 @@ public class Numbers implements ASCIICharacters {
             median = sortedarr.get(index) + sortedarr.get(index + 1);
             median /= 2;
         }
-        return median;
+        return round(median, decimalPlaces);
     }
 
-    public double mean_calc(List<String> arr) {
-        double mean;
-        List<Double> newarr = convertMyArray(arr);
+    private double calculateTotal() {
         double sum = 0;
-        for (int i = 0; i < newarr.size(); i++) {
-            sum += newarr.get(i);
+        for (int i = 0; i < has.size(); i++) {
+            sum += has.get(i);
         }
-        mean = sum / (newarr.size());
+        return sum;
+    }
+
+    public double mid() {
+        double mean;
+//        List<Double> newarr = convertMyArray(arr);
+        double sum = calculateTotal();
+        mean = sum / (has.size());
         return mean;
     }
 
-    public Double standardDeviation(List<String> arr) {
-        List<Double> newarr = convertMyArray(arr);
-        int arr_length = newarr.size();
+    private double percentileCalculator(int percentile) {
+        double sum = 0;
+        double total = calculateTotal();
+        for (int i = 0; i < has.size() && sum < (percentile * 0.01 * total); i++) {
+            sum += has.get(i);
+        }
+        return sum;
+    }
+
+    public Double div(int decimalPlaces) {
+//        List<Double> newarr = convertMyArray(arr);
+        int arr_length = has.size();
         double sum = 0.0;
         double std_deviation = 0.0;
         for (int i = 0; i < arr_length; i++) {
-            sum += newarr.get(i);
+            sum += has.get(i);
         }
-        double mean = mean_calc(arr);
+        double mean = mid();
         for (int i = 0; i < arr_length; i++) {
-            std_deviation += Math.pow(newarr.get(i) - mean, 2);
+            std_deviation += Math.pow(has.get(i) - mean, 2);
         }
-        return Math.sqrt(std_deviation / arr_length);
+        double dev = Math.sqrt(std_deviation / arr_length);
+        double p90 = percentileCalculator(90);
+        double p10 = percentileCalculator(10);
+        double output = (p90 - p10) / 2.56;
+        return round(output, decimalPlaces);
     }
 }
