@@ -26,25 +26,6 @@ public class Numbers extends ColumnData {
     }
 
 
-//    @Override
-//    public Double mid(int decimalPlaces) {
-//        return 0.0;
-//    }
-
-//    @Override
-//    public Double div(int decimalPlaces) {
-//        return median();
-//    }
-
-    //    function Num:add(v,    pos)
-//  if v~="?" then
-//    self.n  = self.n + 1
-//    self.lo = math.min(v, self.lo)
-//    self.hi = math.max(v, self.hi)
-//            if     #self._has < the.nums           then pos=1 + (#self._has)
-//    elseif math.random() < the.nums/self.n then pos=math.random(#self._has) end
-//    if pos then self.isSorted = false
-//    self._has[pos] = tonumber(v) end end end
     @Override
     public void add(String cellValue) {
         int bucketSize = (Integer) The.getArgs().get("nums");
@@ -101,7 +82,7 @@ public class Numbers extends ColumnData {
         return round(median, decimalPlaces);
     }
 
-    private double calculateTotal(){
+    private double calculateTotal() {
         double sum = 0;
         for (int i = 0; i < has.size(); i++) {
             sum += has.get(i);
@@ -117,10 +98,10 @@ public class Numbers extends ColumnData {
         return mean;
     }
 
-    private double percentileCalculator(int percentile){
-        double sum=0;
+    private double percentileCalculator(int percentile) {
+        double sum = 0;
         double total = calculateTotal();
-        for(int i=0;  i<has.size() && sum < (percentile * 0.01 * total); i++){
+        for (int i = 0; i < has.size() && sum < (percentile * 0.01 * total); i++) {
             sum += has.get(i);
         }
         return sum;
@@ -138,10 +119,10 @@ public class Numbers extends ColumnData {
         for (int i = 0; i < arr_length; i++) {
             std_deviation += Math.pow(has.get(i) - mean, 2);
         }
-        double dev =  Math.sqrt(std_deviation / arr_length);
+        double dev = Math.sqrt(std_deviation / arr_length);
         double p90 = percentileCalculator(90);
         double p10 = percentileCalculator(10);
-        double output = (p90 - p10)/2.56;
+        double output = (p90 - p10) / 2.56;
         return round(output, decimalPlaces);
     }
 }
