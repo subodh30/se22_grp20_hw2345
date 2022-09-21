@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-class Eg {
+class TestEngine {
 
     public List<String> methods;
     int fails, success;
 
-    public Eg() {
+    public TestEngine() {
         this.success = 0;
         this.fails = 0;
-        methods = Arrays.stream(Eg.class.getDeclaredMethods()).map(Method::getName).sorted().collect(Collectors.toList());
+        methods = Arrays.stream(TestEngine.class.getDeclaredMethods()).map(Method::getName).sorted().collect(Collectors.toList());
     }
 
     public boolean ALL() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
