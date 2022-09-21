@@ -10,22 +10,26 @@ import java.util.stream.Collectors;
 class Eg {
 
     public List<String> methods;
-    int fails;
+    int fails, success;
 
     public Eg() {
+        this.success = 0;
         this.fails = 0;
         methods = Arrays.stream(Eg.class.getDeclaredMethods()).map(Method::getName).sorted().collect(Collectors.toList());
     }
 
     public boolean ALL() throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        for (String method : methods) {
-            if (!method.equals("ALL")) {
-                System.out.println("\n-----------------------------------");
-                if (!Application.runs(method)) {
-                    fails++;
-                }
-            }
-        }
+
+        if (!BAD()) fails++;
+        if (!LS()) fails++;
+        if (!sym()) fails++;
+        if (!num()) fails++;
+        if (!bignum()) fails++;
+        if (!csv()) fails++;
+        if (!data()) fails++;
+        if (!stats()) fails++;
+        if (!the()) fails++;
+
 
         System.out.println(fails + " Tests failed.");
         return fails == 0;
@@ -87,7 +91,7 @@ class Eg {
     public boolean bignum() {
         Numbers numbers = new Numbers(0, "TestData");
         The.getArgs().put("nums", 32);
-        System.out.println("YO"+The.getArgs().get("nums"));
+        System.out.println("YO" + The.getArgs().get("nums"));
         for (int q = 1; q <= 100; q++) {
             numbers.add(String.valueOf(q));
         }
