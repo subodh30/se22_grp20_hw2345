@@ -48,18 +48,15 @@ jobs:
           reporter: java-junit
           fail-on-error: true
 
-      - name: Check test coverage
-        uses: johanvanhelden/gha-clover-test-coverage-check@v1
-        id: coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
         with:
-          percentage: "50"
-          filename: "coverage.xml"
-
-      - name: Generate the badge SVG image
-        uses: emibcn/badge-action@v1
-        id: badge
-        with:
-          label: 'Coverage'
-          status: ${{ steps.coverage.outputs.coverage }}
-          path: ./badges/test-coverage.svg
-          color: ${{ steps.coverage.outputs.coveragelines > 75 && 'green' || 'red' }}
+          token: "a3dc9987-4142-4ea5-a9ba-c557b7f06d52"
+          directory: ./coverage/reports/
+          env_vars: OS,JAVA
+          fail_ci_if_error: true
+          files: ./target/site/jacoco/jacoco.xml
+          flags: unittests
+          name: codecov-umbrella
+          path_to_write_report: ./coverage/codecov_report.txt
+          verbose: true
