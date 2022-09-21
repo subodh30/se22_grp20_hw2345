@@ -1,8 +1,6 @@
 # se22_grp20_hw2345
 
-<a href="https://github.com/subodh30/se22_grp20_hw2345/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/subodh30/se22_grp20_hw2345/Java"></a>
-
-<a href = "https://github.com/subodh30/se22_grp20_hw2345/pulse"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/subodh30/se22_grp20_hw2345"></a>
+<a href="https://github.com/subodh30/se22_grp20_hw2345/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/subodh30/se22_grp20_hw2345/Java"></a>  <a href = "https://github.com/subodh30/se22_grp20_hw2345/pulse"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/subodh30/se22_grp20_hw2345"></a>    ![GitHub forks](https://img.shields.io/github/forks/subodh30/se22_grp20_hw2345?style=social)    ![GitHub top language](https://img.shields.io/github/languages/top/subodh30/se22_grp20_hw2345?color=green)
 
 ## Team Members
 [Subodh Gujar](https://github.com/subodh30)
