@@ -37,7 +37,7 @@ jobs:
       #        run: java -jar ./target/se22_grp20_hw2345.jar --eg LS
 
       - name: Test
-        run: mvn test
+        run: mvn test jacoco:report
 
       - name: Report
         uses: dorny/test-reporter@v1
