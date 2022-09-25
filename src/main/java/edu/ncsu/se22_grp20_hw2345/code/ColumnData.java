@@ -3,7 +3,12 @@ package edu.ncsu.se22_grp20_hw2345.code;
 
 import lombok.Data;
 
+/**
+ * It is an abstract class inherited by Numbers and Symbols Class
+ */
 @Data
+
+
 public abstract class ColumnData {
 
     public String columnName;
@@ -13,14 +18,5 @@ public abstract class ColumnData {
 
     public abstract Double div(int decimalPlaces);
 
-    //    function Num:add(v,    pos)
-//  if v~="?" then
-//    self.n  = self.n + 1
-//    self.lo = math.min(v, self.lo)
-//    self.hi = math.max(v, self.hi)
-//            if     #self._has < the.nums           then pos=1 + (#self._has)
-//    elseif math.random() < the.nums/self.n then pos=math.random(#self._has) end
-//    if pos then self.isSorted = false
-//    self._has[pos] = tonumber(v) end end end
     public abstract void add(String cellValue);
 }
