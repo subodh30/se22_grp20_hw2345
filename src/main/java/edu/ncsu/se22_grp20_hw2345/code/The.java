@@ -5,6 +5,11 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The is a configuration class, which has a set of fields which can be set by the command line arguments.
+ * It follows Singleton Design pattern as the configurations are set only while running the program and it should be accessible to other classes.
+ */
+
 @Data
 public class The {
     public static String helpString = "" +
