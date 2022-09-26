@@ -5,6 +5,10 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * It holds one record, i.e. cell values of a row
+ */
+
 @Data
 public class Row {
     private List<String> cells;
@@ -16,6 +20,13 @@ public class Row {
         this.isEval = false;
         this.cooked = clone_list(t);
     }
+
+    /**
+     *
+     * This function initializes 3 variables in the class constructor.
+     * Cells is a copy of the input parameter
+     * Cooked is a deep copy of the input parameter i.e. a List<String>
+     */
 
     public static List<String> clone_list(List<String> record) {
         List<String> temp_element = new ArrayList<String>();
