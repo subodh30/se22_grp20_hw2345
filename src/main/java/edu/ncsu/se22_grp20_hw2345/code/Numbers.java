@@ -7,6 +7,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Numbers class keeps a summary of numbers
+ */
+
 @Data
 public class Numbers extends ColumnData {
 
@@ -67,6 +71,11 @@ public class Numbers extends ColumnData {
         return has;
     }
 
+    /**
+     *
+     *     It returns the median of the values present in the data
+     */
+
     //    *Function for Median
     public Double mid(int decimalPlaces) {
         List<Double> sortedarr = nums();
@@ -107,6 +116,12 @@ public class Numbers extends ColumnData {
         }
         return sum;
     }
+
+    /**
+     *
+     * It returns the standard deviation for all the values
+     * The value returned is (90th percentile - 10th percentile)/2.56
+     */
 
     public Double div(int decimalPlaces) {
 //        List<Double> newarr = convertMyArray(arr);
