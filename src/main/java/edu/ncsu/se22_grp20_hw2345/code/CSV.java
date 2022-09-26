@@ -10,6 +10,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ *     This function takes in a filepath as input and uses a BufferedReader to read the csv file line by line.
+ */
+
 public class CSV {
 
     public static List<Row> csv(String filePath) {
