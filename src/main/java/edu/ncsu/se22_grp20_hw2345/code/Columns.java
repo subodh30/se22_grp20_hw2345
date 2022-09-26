@@ -5,7 +5,9 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ *     It maintains the summaries of columns
+ */
 
 @Data
 
@@ -39,6 +41,11 @@ public class Columns {
         }
     }
 
+    /**
+     *
+     *     This function returns a list of all the dependant values
+     */
+
     public List<ColumnData> getY() {
         Y = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
@@ -51,6 +58,11 @@ public class Columns {
         }
         return Y;
     }
+
+    /**
+     *
+     *     This function returns a list of independant values
+     */
 
     public List<ColumnData> getX() {
         X = new ArrayList<>();
