@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Symbols keep a summary of symbols of a given column
+ */
+
 @Data
 public class Symbols extends ColumnData {
     private int count;
@@ -17,6 +21,9 @@ public class Symbols extends ColumnData {
         this.setColumnName(columnName);
     }
 
+    /**
+     * This function adds a valid symbol to the Symbol Map.
+     */
 
     @Override
     public void add(String c) {
@@ -26,6 +33,11 @@ public class Symbols extends ColumnData {
             symbolMap.put(c, symbolMap.getOrDefault(c, 0) + 1);
         }
     }
+
+    /**
+     *
+     *     This function returns the symbol from the symbol map having the highest frequency.
+     */
 
     @Override
     public String mid(int decimalPlaces) {
@@ -40,6 +52,11 @@ public class Symbols extends ColumnData {
         }
         return mode;
     }
+
+    /**
+     *
+     *     It returns entropy value by calculating the probability
+     */
 
     @Override
     public Double div(int decimalPlaces) {
